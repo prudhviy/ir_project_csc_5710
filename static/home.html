@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Information Retrival</title>
+    
+    <!-- Bootstrap -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id='wrapper'>
+        <h2>Search Tweets</h2>
+        <div class="col-wrap cf">
+          <div class="left-col col">left col</div>
+          <div class="middle-col col">
+              <form >
+                <div class="input-wrap">
+                  <label class="lbl">All of the words</label>
+                  <input class="input search_input" type="text">
+                  <span class='all_terms glyphicon glyphicon-search search_icon'>&nbsp;</span>
+                  <button type="button" class="btn btn-sm try_sample_all_terms">Try sample</button>
+                  <input type="hidden" class="sample_val" value="home nations">
+                </div>
+                <div class="input-wrap">
+                  <label class="lbl">Exact phrase</label>
+                  <input class="input search_input" type="text">
+                  <span class='exact_phrase glyphicon glyphicon-search search_icon'>&nbsp;</span>
+                  <button type="button" class="btn btn-sm try_sample_exact_phrase">Try sample</button>
+                  <input type="hidden" class="sample_val" value="Cricket World Cup 2011">
+                </div>
+                <div class="input-wrap">
+                  <label class="lbl">Any of the words</label>
+                  <input class="input search_input" type="text">
+                  <span class='any_terms glyphicon glyphicon-search search_icon'>&nbsp;</span>
+                  <button type="button" class="btn btn-sm try_sample_any_terms">Try sample</button>
+                  <input type="hidden" class="sample_val" value="sachin cricket">
+                </div>
+                <div class="input-wrap">
+                  <label class="lbl">None of the words</label>
+                  <input class="input search_input" type="text">
+                  <span class='none_terms glyphicon glyphicon-search search_icon'>&nbsp;</span>
+                  <button type="button" class="btn btn-sm try_sample">Try sample</button>
+                  <input type="hidden" class="sample_val" value="home nations">
+                </div>
+                <div class="input-wrap">
+                  <label class="lbl">#Hash #tags</label>
+                  <input class="input search_input" type="text">
+                  <span class='hash_tags glyphicon glyphicon-search search_icon'>&nbsp;</span>
+                  <button type="button" class="btn btn-sm try_sample_hash_tags">Try sample</button>
+                  <input type="hidden" class="sample_val" value="music">
+                </div> 
+              </form>
+              <div class="tweet-wrap">
+                  <h4 class="results-h4">Tweet Results</h4>
+                  <span class='loading glyphicon glyphicon-refresh'>&nbsp;Loading...</span>
+              </div>
+          </div>
+          <div class="right-col col">right</div>
+        </div>
+    </div>
+  </body>
+  <script id="tweet-template" type="text/x-handlebars-template">
+      <div class="tweet cf">
+        <div class="avatar"><img scr="http://gravatar.com/avatar.php?gravatar_id=ec088b280ebd6a96cd37cc7ca483b9d3&size=48&rating=G&default=http://davidwalsh.name/wp-content/themes/punky/images/anon.jpg" width="42" height="42"/>
+        </div>
+        <div class="user-tweet cf"> 
+          <div class="user-info cf"> 
+            <span class="user-name"><a href="http://twitter.com/{{creator_name}}" target="_blank">{{creator_name}}</a></span> 
+            <span>.</span> 
+            <!--<span class="at-id">@{{creator_name}}</span> 
+            <span>.</span> -->
+            <span class="location"><span class="glyphicon glyphicon-map-marker"></span>{{location}}</span>
+            <span>.</span> 
+            <span class="date">
+              <span class="glyphicon glyphicon-time"></span>
+              {{created_time}}
+            </span>
+          </div>
+          <div class="tweet-info">
+              {{{tweet_text}}}
+          </div>
+        </div>
+      </div>
+    </script>
+  <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="handlebars-v2.0.0.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</html>
