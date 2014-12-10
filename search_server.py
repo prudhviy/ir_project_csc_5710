@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from pyes import *
 
+INDEX_NAME = 'tweets_new'
 
 # set the project root directory as the static folder, you can set others.
 app = Flask(__name__, static_url_path='')
@@ -23,7 +24,7 @@ def search_all_terms(conn, query_string):
         }
     }
 
-    result = conn.search(query, indices=['tweets'], doc_types=["tweet"])
+    result = conn.search(query, indices=[INDEX_NAME], doc_types=["tweet"])
     return [p for p in result]
 
 
@@ -41,7 +42,7 @@ def search_exact_phrase(conn, query_string):
         }
     }
 
-    result = conn.search(query, indices=['tweets'], doc_types=["tweet"])
+    result = conn.search(query, indices=[INDEX_NAME], doc_types=["tweet"])
     return [p for p in result]
 
 
@@ -61,7 +62,7 @@ def search_any_terms(conn, query_string):
             }
         }
     }
-    result = conn.search(query, indices=['tweets'], doc_types=["tweet"])
+    result = conn.search(query, indices=[INDEX_NAME], doc_types=["tweet"])
     return [p for p in result]
 
 def search_hash_tags(conn, query_string):
@@ -81,7 +82,7 @@ def search_hash_tags(conn, query_string):
                 }
             }
         }
-        result = conn.search(query, indices=['tweets'], doc_types=["tweet"])
+        result = conn.search(query, indices=[INDEX_NAME], doc_types=["tweet"])
         results = results + [p for p in result]
     
     return results

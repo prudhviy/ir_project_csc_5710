@@ -2,7 +2,7 @@ from datetime import datetime
 from elasticsearch import Elasticsearch
 es = Elasticsearch()
 
-INDEX_NAME = 'tweets'
+INDEX_NAME = 'tweets_new'
 
 cnt = 1
 
