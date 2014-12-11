@@ -86,7 +86,27 @@ def search_hash_tags(conn, query_string):
         results = results + [p for p in result]
     
     return results
-    
+ 
+def search_none_terms(conn, query_string, query_mandatory):
+    must_terms = query_mandatory.split()
+
+    should = []
+
+    for term in must_terms:
+        should.append({"term": {"tweet_text": term} })
+
+    query = {
+        "bool": {
+            "should": should,
+            "must_not": {
+                "term": {"tweet_text": query_string }
+            }
+        }
+    }
+
+    result = conn.search(query, indices=[INDEX_NAME], doc_types=["tweet"])
+    return [p for p in result]
+
 
 @app.route("/search/", methods=['POST'])
 def search_api():
@@ -104,9 +124,12 @@ def search_api():
             result['tweets'] = search_exact_phrase(conn, query_term)
         elif query_field == 'any_terms':
             result['tweets'] = search_any_terms(conn, query_term)
+        elif query_field == 'none_terms':
+            query_mandatory = request.form['query_mandatory_terms']
+            result['tweets'] = search_none_terms(conn, query_term, query_mandatory)
         elif query_field == 'hash_tags':
             result['tweets'] = search_hash_tags(conn, query_term)
-        
+
     return jsonify(**result)
 
 @app.route('/static/<path:path>')

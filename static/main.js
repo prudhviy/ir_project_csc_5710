@@ -126,22 +126,43 @@ app.init_click_handlers = function() {
         app.update_input(e, data.query);
         any_terms_search(data);
     });
-    $('body').on('click', '.none_terms', function(e) {
-        var data = {};
+    var none_terms_search = function(data) {
         data.query_type = 'adv';
-        data.query_field = "all_terms";
-        data.query = "home nations";
+        data.query_field = "none_terms";
+        app.show_loading();
         var promise = $.ajax({
             url: "/search/",
             type: "POST",
             data: data
         });
         promise.success(function(response) {
-            console.log(response);
+            app.show_tweets(response, function(text) {
+                var terms = data.query_mandatory_terms.split(" ");
+                $.each(terms, function(i, v) {
+                    text = text.replace(new RegExp(v, 'ig'), "<span class='highlight_term'>" + v + "</span>");
+                });
+                return text;
+            });
         });
         promise.error(function() {
             
         });
+    };
+    $('body').on('click', '.try_sample_none_terms', function(e) {
+        var data = {};
+        data.query = $('.sample_val', $(e.currentTarget).parent()).val();
+        data.query_mandatory_terms = $('.sample_val', $('.any_terms').parent()).val();
+        app.update_input(e, data.query);
+        $('.search_input', $('.any_terms').parent()).val(data.query_mandatory_terms);
+        none_terms_search(data);
+    });
+    $('body').on('click', '.none_terms', function(e) {
+        var data = {};
+        data.query = $('.search_input', $(e.currentTarget).parent()).val();
+        data.query_mandatory_terms = $('.search_input', $('.any_terms').parent()).val();
+        app.update_input(e, data.query);
+        $('.search_input', $('.any_terms').parent()).val(data.query_mandatory_terms);
+        none_terms_search(data);
     });
     var hash_tags_search = function(data) {
         data.query_type = 'adv';
